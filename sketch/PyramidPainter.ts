@@ -13,7 +13,13 @@ class PyramidPainter {
         push();
         noFill();
         strokeWeight(2);
-        this.drawSquare(this.position, this.diameter);
+        let stepVector = createVector(random(-1, 1), random(-1, 1));
+        stepVector = stepVector.normalize();
+        let stepSize = this.diameter / 2 / this.granularity;
+        stepVector = stepVector.mult(stepSize);
+        for(let i = 0; i < this.granularity; i++) {
+            this.drawSquare(p5.Vector.add(this.position, p5.Vector.mult(stepVector, i)), this.diameter - (i * stepSize));
+        }
         pop();
     }
 

@@ -8,7 +8,13 @@ var PyramidPainter = (function () {
         push();
         noFill();
         strokeWeight(2);
-        this.drawSquare(this.position, this.diameter);
+        var stepVector = createVector(random(-1, 1), random(-1, 1));
+        stepVector = stepVector.normalize();
+        var stepSize = this.diameter / 2 / this.granularity;
+        stepVector = stepVector.mult(stepSize);
+        for (var i = 0; i < this.granularity; i++) {
+            this.drawSquare(p5.Vector.add(this.position, p5.Vector.mult(stepVector, i)), this.diameter - (i * stepSize));
+        }
         pop();
     };
     PyramidPainter.prototype.drawSquare = function (pos, size) {
@@ -21,7 +27,7 @@ function setup() {
     console.log("🚀 - Setup initialized - P5 is running");
     createCanvas(windowWidth, windowHeight);
     rectMode(CENTER);
-    frameRate(30);
+    frameRate(5);
     pyramdidPainter = new PyramidPainter(createVector(windowWidth / 2, windowHeight / 2), windowWidth / 2, 10);
 }
 function windowResized() {

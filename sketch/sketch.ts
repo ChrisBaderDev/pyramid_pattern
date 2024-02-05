@@ -7,7 +7,7 @@ function setup() {
   // P5 Settings
   createCanvas(windowWidth, windowHeight)
   rectMode(CENTER);
-  frameRate(30);
+  frameRate(5);
 
   // Pyramid Settings
   pyramdidPainter = new PyramidPainter(createVector(windowWidth / 2, windowHeight / 2), windowWidth / 2, 10);
