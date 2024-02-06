@@ -12,7 +12,7 @@ class PyramidPainter {
     public drawSquares(): void {
         push();
         noFill();
-        strokeWeight(2);
+        strokeWeight(3);
         let stepVector = createVector(random(-1, 1), random(-1, 1));
         stepVector = stepVector.normalize();
         let stepSize = this.diameter / 2 / this.granularity;
