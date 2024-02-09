@@ -7,7 +7,7 @@ var PyramidPainter = (function () {
     PyramidPainter.prototype.drawSquares = function () {
         push();
         noFill();
-        strokeWeight(2);
+        strokeWeight(3);
         var stepVector = createVector(random(-1, 1), random(-1, 1));
         stepVector = stepVector.normalize();
         var stepSize = this.diameter / 2 / this.granularity;
