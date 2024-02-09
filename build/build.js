@@ -8,7 +8,8 @@ var PyramidPainter = (function () {
         this.rotationAngle = 10;
     }
     PyramidPainter.prototype.drawSquares = function () {
-        this.direction.rotate(radians(this.rotationAngle));
+        var mousePos = createVector(mouseX, mouseY);
+        this.direction = mousePos.sub(this.position).normalize();
         var stepSize = this.diameter / (2 * this.granularity);
         var squareSize = this.diameter;
         for (var i = 0; i < this.granularity; i++) {

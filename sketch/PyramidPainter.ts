@@ -16,13 +16,14 @@ class PyramidPainter {
     }
 
     public drawSquares(): void {
-        this.direction.rotate(radians(this.rotationAngle));
-        let stepSize = this.diameter / (2 * this.granularity)
-        let squareSize = this.diameter;
+        let mousePos: p5.Vector = createVector(mouseX, mouseY);
+        this.direction = mousePos.sub(this.position).normalize();
+        let stepSize: number = this.diameter / (2 * this.granularity)
+        let squareSize: number = this.diameter;
         for (let i = 0; i < this.granularity; i++) {
             squareSize = this.diameter - (stepSize * 2 * i);
-            let posOffset = p5.Vector.mult(this.direction, stepSize * i);
-            let newPos = p5.Vector.add(this.position, posOffset);
+            let posOffset: p5.Vector = p5.Vector.mult(this.direction, stepSize * i);
+            let newPos: p5.Vector = p5.Vector.add(this.position, posOffset);
             this.drawSquare(newPos, squareSize);
         }
     }
