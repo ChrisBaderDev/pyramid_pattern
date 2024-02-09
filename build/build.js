@@ -3,38 +3,58 @@ var PyramidPainter = (function () {
         this.position = position;
         this.diameter = diameter;
         this.granularity = granularity;
+        this.direction = p5.Vector.random2D().normalize().mult(Math.random());
     }
     PyramidPainter.prototype.drawSquares = function () {
-        push();
-        noFill();
-        strokeWeight(3);
-        var stepVector = createVector(random(-1, 1), random(-1, 1));
-        stepVector = stepVector.normalize();
-        var stepSize = this.diameter / 2 / this.granularity;
-        stepVector = stepVector.mult(stepSize);
+        var stepSize = this.diameter / (2 * this.granularity);
+        var squareSize = this.diameter;
         for (var i = 0; i < this.granularity; i++) {
-            this.drawSquare(p5.Vector.add(this.position, p5.Vector.mult(stepVector, i)), this.diameter - (i * stepSize));
+            squareSize = this.diameter - (stepSize * 2 * i);
+            var posOffset = p5.Vector.mult(this.direction, stepSize * i);
+            var newPos = p5.Vector.add(this.position, posOffset);
+            this.drawSquare(newPos, squareSize);
         }
-        pop();
     };
     PyramidPainter.prototype.drawSquare = function (pos, size) {
         square(pos.x, pos.y, size);
     };
     return PyramidPainter;
 }());
-var pyramdidPainter;
+var PyramidWall = (function () {
+    function PyramidWall(columns, rows) {
+        this.pyramidPainters = [];
+        var baseWidth = width / columns;
+        var baseHeight = height / rows;
+        for (var i = 0; i < columns; i++) {
+            for (var j = 0; j < rows; j++) {
+                var x = (i * baseWidth) + (baseWidth / 2);
+                var y = (j * baseHeight) + (baseHeight / 2);
+                this.pyramidPainters.push(new PyramidPainter(createVector(x, y), baseWidth, 6));
+            }
+        }
+    }
+    PyramidWall.prototype.drawWallOfPyramids = function () {
+        this.pyramidPainters.forEach(function (painter) {
+            painter.drawSquares();
+        });
+    };
+    return PyramidWall;
+}());
+var pyramidWall;
 function setup() {
     console.log("🚀 - Setup initialized - P5 is running");
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(400, 400);
     rectMode(CENTER);
-    frameRate(5);
-    pyramdidPainter = new PyramidPainter(createVector(windowWidth / 2, windowHeight / 2), windowWidth / 2, 10);
+    frameRate(30);
+    pyramidWall = new PyramidWall(10, 10);
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 function draw() {
     background(255);
-    pyramdidPainter.drawSquares();
+    pyramidWall.drawWallOfPyramids();
+}
+function mouseClicked() {
 }
 //# sourceMappingURL=build.js.map

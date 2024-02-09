@@ -1,16 +1,16 @@
-let pyramdidPainter: PyramidPainter;
+let pyramidWall: PyramidWall;
 
 // P5 WILL AUTOMATICALLY USE GLOBAL MODE IF A DRAW() FUNCTION IS DEFINED
 function setup() {
   console.log("🚀 - Setup initialized - P5 is running");
 
   // P5 Settings
-  createCanvas(windowWidth, windowHeight)
+  createCanvas(400, 400)
   rectMode(CENTER);
-  frameRate(5);
+  frameRate(30);
 
   // Pyramid Settings
-  pyramdidPainter = new PyramidPainter(createVector(windowWidth / 2, windowHeight / 2), windowWidth / 2, 10);
+  pyramidWall = new PyramidWall(10, 10);
 }
 
 function windowResized() {
@@ -21,5 +21,9 @@ function windowResized() {
 function draw() {
   // CLEAR BACKGROUND
   background(255);
-  pyramdidPainter.drawSquares();
+  pyramidWall.drawWallOfPyramids();
+}
+
+function mouseClicked() {
+  
 }
