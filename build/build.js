@@ -3,13 +3,17 @@ var PyramidPainter = (function () {
         this.position = position;
         this.diameter = diameter;
         this.granularity = granularity;
+        this.direction = p5.Vector.random2D().normalize().mult(random(0.25, 1));
     }
     PyramidPainter.prototype.drawSquares = function () {
-        push();
-        noFill();
-        strokeWeight(2);
-        this.drawSquare(this.position, this.diameter);
-        pop();
+        var stepSize = this.diameter / (2 * this.granularity);
+        var squareSize = this.diameter;
+        for (var i = 0; i < this.granularity; i++) {
+            squareSize = this.diameter - (stepSize * 2 * i);
+            var posOffset = p5.Vector.mult(this.direction, stepSize * i);
+            var newPos = p5.Vector.add(this.position, posOffset);
+            this.drawSquare(newPos, squareSize);
+        }
     };
     PyramidPainter.prototype.drawSquare = function (pos, size) {
         square(pos.x, pos.y, size);
