@@ -7,7 +7,7 @@ function setup() {
   // P5 Settings
   createCanvas(400, 400)
   rectMode(CENTER);
-  frameRate(30);
+  frameRate(60);
 
   // Pyramid Settings
   pyramidWall = new PyramidWall(10, 10);

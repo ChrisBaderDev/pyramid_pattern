@@ -3,9 +3,12 @@ var PyramidPainter = (function () {
         this.position = position;
         this.diameter = diameter;
         this.granularity = granularity;
-        this.direction = p5.Vector.random2D().normalize().mult(Math.random());
+        this.direction = p5.Vector.random2D().normalize().mult(random(0.25, 1));
+        this.rotationMode = true;
+        this.rotationAngle = 10;
     }
     PyramidPainter.prototype.drawSquares = function () {
+        this.direction.rotate(radians(this.rotationAngle));
         var stepSize = this.diameter / (2 * this.granularity);
         var squareSize = this.diameter;
         for (var i = 0; i < this.granularity; i++) {
@@ -15,8 +18,13 @@ var PyramidPainter = (function () {
             this.drawSquare(newPos, squareSize);
         }
     };
+    PyramidPainter.prototype.switchRotationMode = function () {
+        this.rotationMode = !this.rotationMode;
+    };
     PyramidPainter.prototype.drawSquare = function (pos, size) {
+        push();
         square(pos.x, pos.y, size);
+        pop();
     };
     return PyramidPainter;
 }());
@@ -45,7 +53,7 @@ function setup() {
     console.log("🚀 - Setup initialized - P5 is running");
     createCanvas(400, 400);
     rectMode(CENTER);
-    frameRate(30);
+    frameRate(60);
     pyramidWall = new PyramidWall(10, 10);
 }
 function windowResized() {
