@@ -12,12 +12,16 @@ class PyramidPainter {
         this.granularity = granularity;
         this.direction = p5.Vector.random2D().normalize().mult(random(0.25, 1));
         this.rotationMode = true;
-        this.rotationAngle = 10;
+        this.rotationAngle = 1;
     }
 
     public drawSquares(): void {
         let mousePos: p5.Vector = createVector(mouseX, mouseY);
-        this.direction = mousePos.sub(this.position).normalize();
+        if(this.rotationMode) {
+            this.direction.rotate(radians(this.rotationAngle));
+        } else {
+            this.direction = mousePos.sub(this.position).normalize();
+        }
         let stepSize: number = this.diameter / (2 * this.granularity)
         let squareSize: number = this.diameter;
         for (let i = 0; i < this.granularity; i++) {
@@ -30,6 +34,7 @@ class PyramidPainter {
 
     public switchRotationMode() {
         this.rotationMode = !this.rotationMode;
+        this.direction = p5.Vector.random2D().normalize().mult(random(0.25, 1));
     }
 
     private drawSquare(pos: p5.Vector, size:number): void {

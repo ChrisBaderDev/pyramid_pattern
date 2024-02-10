@@ -5,11 +5,16 @@ var PyramidPainter = (function () {
         this.granularity = granularity;
         this.direction = p5.Vector.random2D().normalize().mult(random(0.25, 1));
         this.rotationMode = true;
-        this.rotationAngle = 10;
+        this.rotationAngle = 1;
     }
     PyramidPainter.prototype.drawSquares = function () {
         var mousePos = createVector(mouseX, mouseY);
-        this.direction = mousePos.sub(this.position).normalize();
+        if (this.rotationMode) {
+            this.direction.rotate(radians(this.rotationAngle));
+        }
+        else {
+            this.direction = mousePos.sub(this.position).normalize();
+        }
         var stepSize = this.diameter / (2 * this.granularity);
         var squareSize = this.diameter;
         for (var i = 0; i < this.granularity; i++) {
@@ -21,6 +26,7 @@ var PyramidPainter = (function () {
     };
     PyramidPainter.prototype.switchRotationMode = function () {
         this.rotationMode = !this.rotationMode;
+        this.direction = p5.Vector.random2D().normalize().mult(random(0.25, 1));
     };
     PyramidPainter.prototype.drawSquare = function (pos, size) {
         push();
@@ -47,6 +53,11 @@ var PyramidWall = (function () {
             painter.drawSquares();
         });
     };
+    PyramidWall.prototype.switchRotationModes = function () {
+        this.pyramidPainters.forEach(function (painter) {
+            painter.switchRotationMode();
+        });
+    };
     return PyramidWall;
 }());
 var pyramidWall;
@@ -65,5 +76,6 @@ function draw() {
     pyramidWall.drawWallOfPyramids();
 }
 function mouseClicked() {
+    pyramidWall.switchRotationModes();
 }
 //# sourceMappingURL=build.js.map

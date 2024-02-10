@@ -25,5 +25,5 @@ function draw() {
 }
 
 function mouseClicked() {
-  
+  pyramidWall.switchRotationModes();
 }

@@ -20,5 +20,11 @@ class PyramidWall {
             painter.drawSquares();
         });
     }
+
+    public switchRotationModes() {
+        this.pyramidPainters.forEach(function(painter) {
+            painter.switchRotationMode();
+        });
+    }
 }
 
