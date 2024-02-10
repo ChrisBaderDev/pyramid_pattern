@@ -12,7 +12,7 @@ class PyramidPainter {
         this.granularity = granularity;
         this.direction = p5.Vector.random2D().normalize().mult(random(0.25, 1));
         this.rotationMode = true;
-        this.rotationAngle = 10;
+        this.rotationAngle = 1;
     }
 
     public drawSquares(): void {
